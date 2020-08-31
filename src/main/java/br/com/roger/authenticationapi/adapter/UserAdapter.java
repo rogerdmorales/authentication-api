@@ -7,7 +7,9 @@ import br.com.roger.authenticationapi.web.dto.UserDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor( access = AccessLevel.PRIVATE )
@@ -27,12 +29,15 @@ public class UserAdapter {
                 .id( userDTO.getId() )
                 .name( userDTO.getName() )
                 .email( userDTO.getEmail() )
+                .password( userDTO.getPassword() )
                 .roles( toRoles( userDTO.getRoles() ) )
                 .build();
     }
 
     public static List< RoleDTO > fromRoles( List< Role > roles ) {
-        return roles.stream()
+        return Optional.ofNullable( roles )
+                .orElse( new ArrayList<>() )
+                .stream()
                 .map( role -> RoleDTO.builder()
                         .id( role.getId() )
                         .code( role.getCode() )
@@ -42,7 +47,9 @@ public class UserAdapter {
     }
 
     public static List< Role > toRoles( List< RoleDTO > roleDTOs ) {
-        return roleDTOs.stream()
+        return Optional.ofNullable( roleDTOs )
+                .orElse( new ArrayList<>() )
+                .stream()
                 .map( roleDTO -> Role.builder()
                         .id( roleDTO.getId() )
                         .code( roleDTO.getCode() )
