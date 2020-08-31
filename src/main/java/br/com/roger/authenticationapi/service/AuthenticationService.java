@@ -14,9 +14,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,8 +47,9 @@ public class AuthenticationService {
         Authentication authentication = authenticationManager.authenticate( usernamePasswordAuthenticationToken );
         SecurityContextHolder.getContext().setAuthentication( authentication );
 
-        User user = ( User ) authentication.getDetails();
-        List< String > roles = user.getRoles()
+        User user = ( User ) authentication.getPrincipal();
+        List< String > roles = Optional.ofNullable( user.getRoles() )
+                .orElse( new ArrayList<>() )
                 .stream()
                 .map( role -> role.getCode() )
                 .collect( Collectors.toList() );

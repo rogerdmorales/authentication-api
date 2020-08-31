@@ -52,9 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( "h2-console" )
                 .permitAll()
                 .antMatchers( HttpMethod.POST, "/api/auth/login", "/api/auth/users" )
-                .permitAll()
-                .anyRequest()
-                .authenticated();
+                .permitAll();
+//                .anyRequest()
+//                .authenticated();
     }
 
     @Bean
