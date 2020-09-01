@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint( authenticationEntryPoint )
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/h2-console" )
+                .antMatchers( "/h2-console/**" )
                 .permitAll()
                 .antMatchers( HttpMethod.POST, "/api/auth/login", "/api/auth/users" )
                 .permitAll()
