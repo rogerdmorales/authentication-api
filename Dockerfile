@@ -11,7 +11,7 @@ RUN ./mvnw package -DskipTests
 
 FROM docker.io/library/openjdk:8u212-jre-slim
 
-COPY --from=build /app/target/authentication-api.jar /authentication-api.jar
+COPY --from=build /app/target/authentication-api-*.jar /authentication-api.jar
 ENTRYPOINT ["/usr/local/openjdk-8/bin/java", "-jar", "/authentication-api.jar"]
-EXPOSE 8081
+EXPOSE 8080
 USER www-data
